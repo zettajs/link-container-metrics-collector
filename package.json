@@ -6,6 +6,7 @@
   "dependencies": {
     "docker-allcontainers": "^0.3.1",
     "docker-stats": "^0.3.0",
+    "meminfo": "0.0.0",
     "stats-client": "^0.2.0",
     "through2": "^0.6.5"
   },

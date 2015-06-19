@@ -2,6 +2,9 @@ var Stats = require('docker-stats');
 var AllContainers = require('docker-allcontainers');
 var through = require('through2');
 var StatsClient = require('stats-client');
+var os = require('os');
+var meminfo = require('meminfo');
+
 var host = process.env.COREOS_PRIVATE_IPV4 || 'localhost';
 var client = new StatsClient(host + ':8125' || 'localhost:8125', {containerHost: host});
 
@@ -23,4 +26,26 @@ function startCollection() {
   })).pipe(process.stdout); 
 }
 
+function startMeminfoCollection() {
+  var delay = 30000;
+  var collect = function() {
+    meminfo(function(err, data) {
+      setTimeout(collect, delay);
+      if (err) {
+        console.error('Failed to collect stats from /proc/meminfo ' + err);
+        return;
+      }
+      
+      client.gauge('instance.freememory', data.MemFree);
+      console.log('Instance Free Memory:', data.MemFree + ' kb');
+    });
+  };
+  
+  collect();
+}
+
 startCollection();
+if (os.platform() === 'linux') {
+  console.log('Linux Platform detected starting meminfo collection');
+  startMeminfoCollection();
+}
