@@ -14,6 +14,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "MIT"
+  "author": "Adam Magaluk <AdamMagaluk@google.com>",
+  "license": "Apache-2.0"
 }

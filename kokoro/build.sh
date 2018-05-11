@@ -14,7 +14,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#!/bin/sh
-
-docker build -t zetta/link-container-metrics-collector .
-
+#!/bin/bash
+set -x
